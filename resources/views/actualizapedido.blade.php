@@ -8,11 +8,12 @@
 </head>
 <body>
     
-    <form action="/actualiza/{{$pedido->id}}" method="post">
+    <form action="/actualiza/{{$pedido->id}}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="text" name="Descripcion" value="{{$pedido->descripcion}}" placeholder="Descripcion" >
         <input type="number" name="Unidades" value="{{$pedido->unidades}}" placeholder="Unidades">
         <input type="number" name="Subtotal" value="{{$pedido->subtotal}}" placeholder="Subtotal">
+        <input type="file" name="archivo">
         <input type="submit" value="Enviar">
     </form>
 

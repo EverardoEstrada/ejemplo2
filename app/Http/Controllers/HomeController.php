@@ -18,12 +18,17 @@ class HomeController extends Controller
         return view('pedidos')->with('orders',$pedidos)->with('pedidos2',$pedidos2)->with('pedidos3',$pedidos3);
     }
 
-    public function guardapedido()
+    public function guardapedido(Request $request)
     {
         $pedido= new Pedidos();
         $pedido->descripcion=request("Descripcion");
         $pedido->unidades=request("Unidades");
         $pedido->subtotal=request("Subtotal");
+
+        $path = $request->file('archivo')->store('public/imagenes');
+        $pedido->imagen=$path;
+        // dd($path);
+
         $pedido->save();
 
         return redirect("/");

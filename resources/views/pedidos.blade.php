@@ -8,18 +8,20 @@
 </head>
 <body>
     
-    <form action="/guardapedido" method="POST">
+    <form action="/guardapedido" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="text" name="Descripcion" placeholder="Descripcion">
         <input type="number" name="Unidades" placeholder="Unidades">
         <input type="number" name="Subtotal" placeholder="Subtotal">
+        <input type="file" name="archivo">
         <input type="submit" value="Enviar">
     </form>
 
 
     <div>
     @foreach($orders as $order)
-        <p>{{$order->descripcion}} | {{$order->unidades}} | {{$order->subtotal}} | <a href="/actualiza/{{$order->id}}">Actualizar</a> |
+        <p>{{$order->descripcion}} | {{$order->unidades}} | {{$order->subtotal}} | <a href="/actualiza/{{$order->id}}">Actualizar</a> 
+        <img src="/storage/{{$order->imagen}}" alt="" width="150px">|
         <form action="/borra/{{$order->id}}" method="post">@csrf<input type="submit" value="Borrar"></form>
          </p>
     @endforeach

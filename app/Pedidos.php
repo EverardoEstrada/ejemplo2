@@ -14,5 +14,6 @@ class Pedidos extends Model
         'descripcion',
         'unidades',
         'subtotal',
+        'imagen'
     ];
 }
