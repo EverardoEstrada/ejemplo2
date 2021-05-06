@@ -18,7 +18,7 @@ class Createpedido extends Migration
             $table->string('descripcion');
             $table->integer('unidades');
             $table->decimal('subtotal');
-            $table->string('imagen');
+            $table->string('imagen')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

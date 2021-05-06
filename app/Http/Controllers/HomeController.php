@@ -25,8 +25,12 @@ class HomeController extends Controller
         $pedido->unidades=request("Unidades");
         $pedido->subtotal=request("Subtotal");
 
-        $path = $request->file('archivo')->store('public/imagenes');
-        $pedido->imagen=$path;
+        
+        $pedido->save();
+
+        $path = $request->file('archivo')->storeAs('public/imagenes',$pedido->id.'.'.$request->file('archivo')->getClientOriginalExtension());
+        $pedido->imagen=$pedido->id.'.'.$request->file('archivo')->getClientOriginalExtension();
+
         // dd($path);
 
         $pedido->save();

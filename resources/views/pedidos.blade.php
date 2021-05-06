@@ -21,7 +21,7 @@
     <div>
     @foreach($orders as $order)
         <p>{{$order->descripcion}} | {{$order->unidades}} | {{$order->subtotal}} | <a href="/actualiza/{{$order->id}}">Actualizar</a> 
-        <img src="/storage/{{$order->imagen}}" alt="" width="150px">|
+        <img src="/storage/imagenes/{{$order->imagen}}" alt="" width="150px">|
         <form action="/borra/{{$order->id}}" method="post">@csrf<input type="submit" value="Borrar"></form>
          </p>
     @endforeach
