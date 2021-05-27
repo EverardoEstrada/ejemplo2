@@ -7,13 +7,20 @@
     <title>Pedidos</title>
 </head>
 <body>
-    
+
+
+    <form action="/pedidos" method="POST">
+        @csrf
+        <input type="text" name="busqueda">
+        <input type="submit">
+    </form>
+
+    <br><br><br>    
     <form action="/guardapedido" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="text" name="Descripcion" placeholder="Descripcion">
         <input type="number" name="Unidades" placeholder="Unidades">
         <input type="number" name="Subtotal" placeholder="Subtotal">
-        <input type="file" name="archivo">
         <input type="submit" value="Enviar">
     </form>
 
@@ -21,25 +28,25 @@
     <div>
     @foreach($orders as $order)
         <p>{{$order->descripcion}} | {{$order->unidades}} | {{$order->subtotal}} | <a href="/actualiza/{{$order->id}}">Actualizar</a> 
-        <img src="/storage/imagenes/{{$order->imagen}}" alt="" width="150px">|
-        <form action="/borra/{{$order->id}}" method="post">@csrf<input type="submit" value="Borrar"></form>
+        |<form action="/borra/{{$order->id}}" method="post">@csrf<input type="submit" value="Borrar"></form>
          </p>
     @endforeach
     </div>
 
-    <div>
-    <h2>Pedidos mayores a $500 pesos</h2>
-    @foreach($pedidos2 as $order)
-        <p>{{$order->descripcion}} | {{$order->unidades}} | {{$order->subtotal}}</p>
-    @endforeach
     
-    </div>
+    
 
-    <h2>Pedidos eliminados</h2>
-    @foreach($pedidos3 as $order)
-        <p>{{$order->descripcion}} | {{$order->unidades}} | {{$order->subtotal}}</p>
-    @endforeach
-    
+    <form action="/reporte" method="POST">
+        @csrf
+        <input type="submit" value="Descargar PDF">
+    </form>
+
+
+    <script>
+
+
+
+    </script>
 
 </body>
 </html>

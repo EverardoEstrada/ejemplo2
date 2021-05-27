@@ -13,11 +13,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/','HomeController@saluda');
+
+Auth::routes();
+
+Route::get('/','InicioController@index');
+
+Route::get('/dashboard','HomeController@index');
+
+Route::get('/pedidos','HomeController@pedidos');
+Route::post('/pedidos','HomeController@pedidos');
+
+Route::post('/pedidos/{id}','HomeController@detallepedidos');
+Route::get('/pedidos/{id}','HomeController@detallepedidos');
+
 Route::post('/guardapedido','HomeController@guardapedido');
-
-Route::get('/actualiza/{id}','HomeController@muestraactualizacion');
-Route::post('/actualiza/{id}','HomeController@guardaactualizacion');
-
 Route::post('/borra/{id}','HomeController@borra');
+
+
 

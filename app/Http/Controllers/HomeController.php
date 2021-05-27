@@ -3,61 +3,72 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 use App\Pedidos;
+
 
 class HomeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        // dd(Auth::user());
+
+        if(Auth::user()->tipo=='admin')
+          return view('dashboard');
+        else
+            return view("chalan");
+    }
+
     public function saluda()
     {
-        $pedidos=Pedidos::all(); 
-        $pedidos2=Pedidos::where('subtotal','>',500)->get();
-        $pedidos3=Pedidos::onlyTrashed()->get();
-        // dd($pedidos3);
-
-        return view('pedidos')->with('orders',$pedidos)->with('pedidos2',$pedidos2)->with('pedidos3',$pedidos3);
+        return view('principal.principal');
     }
 
-    public function guardapedido(Request $request)
+    public function pedidos()
     {
-        $pedido= new Pedidos();
-        $pedido->descripcion=request("Descripcion");
-        $pedido->unidades=request("Unidades");
-        $pedido->subtotal=request("Subtotal");
+        $palabra=request("busqueda");
 
-        
-        $pedido->save();
-
-        $path = $request->file('archivo')->storeAs('public/imagenes',$pedido->id.'.'.$request->file('archivo')->getClientOriginalExtension());
-        $pedido->imagen=$pedido->id.'.'.$request->file('archivo')->getClientOriginalExtension();
-
-        // dd($path);
-
-        $pedido->save();
-
-        return redirect("/");
+        if(!is_null($palabra) && $palabra!="")
+        {
+            $orders=Pedidos::where('descripcion', 'Like','%'.$palabra.'%')->get();
+        }
+        else
+        {
+            $orders=Pedidos::all();
+        }
+        return view('pedidos')->with('orders',$orders);
     }
 
-    public function muestraactualizacion($id)
+    public function guardapedido()
     {
-        $pedido= Pedidos::find($id);
-        return view('actualizapedido')->with('pedido',$pedido);
-    }
-
-    public function guardaactualizacion($id)
-    {
-        $pedido= Pedidos::find($id);
-        $pedido->descripcion=request("Descripcion");
-        $pedido->unidades=request("Unidades");
-        $pedido->subtotal=request("Subtotal");
-        $pedido->save();
-        return redirect("/");
+        $p1= new Pedidos();
+        $p1->descripcion=request("Descripcion");
+        $p1->unidades=request("Unidades");
+        $p1->subtotal=request("Subtotal");
+        $p1->save();
+        return redirect('/pedidos');
     }
 
     public function borra($id)
     {
-        $pedido= Pedidos::find($id);
-        $pedido->delete();
-        return redirect("/");
+        $p1=Pedidos::find($id);
+        $p1->delete();
+        return redirect('/pedidos');
     }
+    
 }

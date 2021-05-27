@@ -13,6 +13,7 @@
         <input type="text" name="Descripcion" value="{{$pedido->descripcion}}" placeholder="Descripcion" >
         <input type="number" name="Unidades" value="{{$pedido->unidades}}" placeholder="Unidades">
         <input type="number" name="Subtotal" value="{{$pedido->subtotal}}" placeholder="Subtotal">
+        <img src="/storage/imagenes/{{$pedido->imagen}}" alt="" width="150px">
         <input type="file" name="archivo">
         <input type="submit" value="Enviar">
     </form>
